@@ -6,12 +6,14 @@ extern _ft_strcpy
 _ft_strdup: 
 			xor		rax, rax
 			call	_ft_strlen
+			inc		rax
+
+allocate:
 			push	rdi 
 			mov 	rdi, rax
-			inc		rdi
 			call	_malloc
 			jc		error
-			mov		BYTE[rax], 0
+			mov		BYTE[rdi - 1], 0
 			pop		rdi
 			mov		rcx, rdi
 			mov		rdi, rax
@@ -28,3 +30,4 @@ error:
 			ret
 isNull:
 			ret
+			
