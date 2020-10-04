@@ -45,7 +45,7 @@ iterate:
 	cmp	rdx, r8	
 	jne	iterate	
 	mov	BYTE[rdi + rdx], 0
-	pop r13				;poppppp2
+	pop r13		
 	pop rbp
 	pop rcx
 	ret
