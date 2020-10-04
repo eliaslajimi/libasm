@@ -17,9 +17,6 @@ _ft_strdup:
 	je  	error
 	pop 	rsi
 	mov 	rdi, rax
-	;mov 	rcx, rdi
-	;mov 	rdi, rax
-	;mov 	rsi, rcx
 	call	_ft_strcpy
 	ret		
 error:
