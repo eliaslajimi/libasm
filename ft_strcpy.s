@@ -1,22 +1,19 @@
 global _ft_strcpy
 
-_ft_strcpy:		xor rax, rax
-				jmp txt
+_ft_strcpy:		
+	push	rbx
+	push	rcx
+	xor	rdx, rdx
+	mov	rcx, -1
+	mov	rax, rdi;the dest
+	mov	rbx, rsi;the src
 
-incr:			inc rax
-				;inc rsi
-				;inc rdi
-
-txt:			cmp BYTE[rsi+rax], 0 
-				je	O_terminate
-				mov bl, BYTE[rsi+rax]
-				mov BYTE[rdi+rax], bl 
-				jmp incr			
-
-O_terminate:	;inc rax
-				mov BYTE[rdi+rax], 0
-
-return:			ret
-
-			
-			
+loop:	
+	inc	rcx	
+	mov	dl, BYTE[rbx+rcx]
+	mov	BYTE[rcx+rax], dl 
+	cmp	BYTE[rbx+rcx], 0 
+	jne	loop	
+	pop	rcx
+	pop	rbx
+	ret

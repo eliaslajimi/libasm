@@ -4,30 +4,27 @@ extern _ft_strlen
 extern _ft_strcpy
 
 _ft_strdup: 
-			xor		rax, rax
-			call	_ft_strlen
-			inc		rax
-
-allocate:
-			push	rdi 
-			mov 	rdi, rax
-			call	_malloc
-			jc		error
-			mov		BYTE[rdi - 1], 0
-			pop		rdi
-			mov		rcx, rdi
-			mov		rdi, rax
-			mov		rsi, rcx
-			call	_ft_strcpy
-
-_return:	ret			
-
+	xor	rax, rax
+	xor	rsi, rsi 
+	cmp	rdi, 0
+	je	_return
+	push	rdi 
+	call	_ft_strlen
+	inc	rax
+	mov 	rdi, rax
+	call	_malloc
+	cmp	rax, 0
+	je  	error
+	pop 	rsi
+	mov 	rdi, rax
+	;mov 	rcx, rdi
+	;mov 	rdi, rax
+	;mov 	rsi, rcx
+	call	_ft_strcpy
+	ret		
 error:
-			push	r12	
-			mov		r12, rax
-			mov		qword[rax], r12
-			mov		rax, -1
-			ret
-isNull:
-			ret
-			
+	pop	rdi
+	mov	rax, -1
+_return:
+	ret
+
