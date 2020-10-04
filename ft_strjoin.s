@@ -4,7 +4,7 @@ extern	_ft_strcpy
 extern	_malloc
 
 _ft_strjoin:
-	push	rax			;pushh4
+	push	rax			
 	mov	rax,	0
 	push	rbp
 	push	rcx
@@ -13,12 +13,12 @@ _ft_strjoin:
 	xor	r8, r8
 	mov 	rcx, 0
 	mov	r11, 0 
-	push	r13			;pushhh2
-	push	rdi			;pushh1
-	call	_ft_strlen	
+	push	r13	     
+	push	rdi	     
+	call	_ft_strlen   
 	mov	r13, rax
 	mov	rdi, rsi
-	call	_ft_strlen	
+	call	_ft_strlen   
 	add	rax, r13
 	inc	rax
 	mov	r8, rax
@@ -26,16 +26,16 @@ _ft_strjoin:
 	call	_malloc
 
 fill_malloc:
-	pop	rdi			;poppp1
-	push	rsi			;pushhh3
+	pop	rdi	     
+	push	rsi	     
 	mov	rsi, rdi
-	mov	rdi, rax		
-	pop	rax			;popppp4
+	mov	rdi, rax     
+	pop	rax	     
 	call	_ft_strcpy
 	mov	rdi, rax
 	mov	rdx, r13
 	mov	r10, 0 
-	pop	rsi			;poppp3
+	pop	rsi	     
 
 iterate:
 	mov	ch, BYTE[rbp]
