@@ -14,7 +14,7 @@ int main()
 //	char *s1 = "Hello World";
 //	char *s2 = ft_strdup(s1);
 //	printf("%s", s2);
-	char *s1 = "Hello World";
+	char *s1 = "World";
 	char *s2 = "test";
 	printf("_%s_", ft_strjoin(s1, s2));
 	return (0);

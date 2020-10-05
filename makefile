@@ -11,4 +11,5 @@ all:
 fclean:
 	rm -rf *.o
 	rm *.a
+	rm debug
 
