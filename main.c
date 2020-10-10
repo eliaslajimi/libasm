@@ -38,7 +38,7 @@ extern char	*ft_strjoin(const char *s1, const char *s2);
 extern int	ft_list_size(t_list *begin_list);
 extern void	ft_list_push_front(t_list **begin_list, void *data);
 extern void	ft_list_swap(t_list *t1, t_list *t2);
-extern int ft_list_sort(t_list **begin_list, int (*cmp)());
+extern void	ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main()
 {

@@ -36,6 +36,7 @@ _inc:
 	jmp _bubbleSort
 
 _return:
+	mov rax, 0
 	pop rbx
 	pop r14
 	pop r13
