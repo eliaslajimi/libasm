@@ -5,14 +5,12 @@ _ft_list_sort:
 	push r12
 	push r13
 	push r14
-	push r15
 	push rbx
 	
 	mov rdi, [rdi]
-	mov r12, rdi	;list
-	mov r13, rdi	;list
-	mov r14, rsi	;func
-	mov r15, -8;dont need
+	mov r12, rdi
+	mov r13, rdi
+	mov r14, rsi
 	mov rbx, rdi
 
 _bubbleSort:
@@ -27,7 +25,7 @@ _cmp:
 	mov rdi, [r12]
 	mov rsi, [r13]
 	call r14
-	cmp rax, 0
+	test eax, eax ;more efficient than cmp
 	jl _swap
 	mov r13, QWORD [r13 +  8]
 	jmp _loop
@@ -39,7 +37,6 @@ _inc:
 
 _return:
 	pop rbx
-	pop r15
 	pop r14
 	pop r13
 	pop r12

@@ -42,10 +42,10 @@ extern int ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main()
 {
-	int number = 21;
+	int number = 101;
 	int number2 = 21;
 	int number3 = 51;
-	int number4 = 90;
+	int number4 = 40;
 	
 	t_list *t1, *t2;
 	t1 = (t_list*)malloc(sizeof(t_list));
