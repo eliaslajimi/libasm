@@ -8,6 +8,7 @@ all:
 	nasm  -f macho64 ft_strjoin.s
 	nasm  -f macho64 ft_list_size.s
 	nasm  -f macho64 ft_list_push_front.s
+	nasm  -f macho64 ft_list_swap.s
 	ar -rcs libasm.a *.o
 	gcc -g main.c *.o -o debug
 fclean:
