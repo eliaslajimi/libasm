@@ -1,21 +1,53 @@
+extern _ft_list_swap
 global _ft_list_sort
 
 _ft_list_sort:
-	push	r13
-	push	r14
-	mov		rdx, - 8				;pointer iterator
-_inc:
-	add		rdx, 8 
-_iter:
-	mov		r13, QWORD [rdi + rdx]	;moving struct to register 
-	cmp		r13, 0
-	je		_order					;call to order function
-	mov		r14, QWORD [rdi - 8]	;load void data in r14
+	push r12
+	push r13
+	push r14
+	push r15
+	push rbx
 	
+	mov rdi, [rdi]
+	mov r12, rdi	;list
+	mov r13, rdi	;list
+	mov r14, rsi	;func
+	mov r15, -8;dont need
+	mov rbx, rdi
 
+_bubbleSort:
+	cmp r12, 0
+	je _return
 
-_order:
+_loop:
+ 	cmp r13, 0
+	je _inc
 
-	pop		r13
-	pop		r14
+_cmp:
+	mov rdi, [r12]
+	mov rsi, [r13]
+	call r14
+	cmp rax, 0
+	jl _swap
+	mov r13, QWORD [r13 +  8]
+	jmp _loop
+
+_inc:
+	mov r12, QWORD[r12 + 8]	
+	mov r13, rbx
+	jmp _bubbleSort
+
+_return:
+	pop rbx
+	pop r15
+	pop r14
+	pop r13
+	pop r12
 	ret
+
+_swap:
+	mov rsi, r12
+	mov rdi, r13
+	call _ft_list_swap
+	mov r13, QWORD [r13 +  8]
+	jmp _loop

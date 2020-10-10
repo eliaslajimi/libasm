@@ -9,6 +9,25 @@ typedef struct	s_list
 	struct s_list *next;
 }	t_list;
 
+int numCmp(void *data, void *data2)
+{
+	int ret = 0;
+	*((int*)data) > *((int*)data2) ? ret = 1 : (void)ret;
+	*((int*)data) < *((int*)data2) ? ret = -1 : (void)ret;
+	return (ret);
+}
+
+void strctPrint(t_list *list)
+{
+	while(list)
+	{
+		fflush(stdout);
+		printf("[___%d___]", *((int*)list->data));
+		list = list->next;
+	}
+	printf("\n");
+}
+
 extern int	ft_strlen (char *str);
 extern char	*ft_strcpy(char *dst, const char *src); 
 extern int	ft_strcmp(const char *s1, const char *s2);
@@ -19,56 +38,45 @@ extern char	*ft_strjoin(const char *s1, const char *s2);
 extern int	ft_list_size(t_list *begin_list);
 extern void	ft_list_push_front(t_list **begin_list, void *data);
 extern void	ft_list_swap(t_list *t1, t_list *t2);
+extern int ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main()
 {
-	int number = 30;
-	int number2 = 40;
-	int number3 = 50;
-	int number4 = 60;
+	int number = 21;
+	int number2 = 21;
+	int number3 = 51;
+	int number4 = 90;
 	
-	t_list *t1, *t2, *t3;
-	t_list *test, *test2;
+	t_list *t1, *t2;
 	t1 = (t_list*)malloc(sizeof(t_list));
 	t2 = (t_list*)malloc(sizeof(t_list));
-	t3 = (t_list*)malloc(sizeof(t_list));
 
 
-//Testing Push_Front
 	t1->data = &number;
 	t1->next = NULL;
 	ft_list_push_front(&t1, &number2);
 	ft_list_push_front(&t1, &number3);
 	ft_list_push_front(&t1, &number4);
-	test = t1;
 
-	printf("push_front:");
-	while(test)
-	{
-		fflush(stdout);
-		printf("___%d___", *((int*)test->data));
-		test = test->next;
-	}
-	printf("\n");	
-
-//Test Swap
-	test = t1;
-	test2 = t1->next;
-	printf("swap:");
+/*Testing Push_Front*/
+	printf("push:%8s", " ");
+	strctPrint(t1);	
 	fflush(stdout);
-	printf("t1:___%d___", *((int*)test->data));
-	printf("t2:___%d___\n", *((int*)test2->data));
-	fflush(stdout);
-	ft_list_swap(test, test2);
-	printf("t1:___%d___", *((int*)test->data));
-	printf("t2:___%d___", *((int*)test2->data));
 
-	printf("\n");	
+/*Test Swap*/
+	printf("swap:%8s", " ");
+	ft_list_swap(t1, t1->next);
+	ft_list_swap(t1->next->next, t1);
+	strctPrint(t1);	
+	fflush(stdout);
 	
-	
+/*ft_list_sort*/
+	ft_list_sort(&t1, numCmp);
+	printf("sort:%8s", " ");
+	strctPrint(t1);	
+	fflush(stdout);
 
 	free(t1);
 	free(t2);
-	free(t3);
 	return (0);
 }
