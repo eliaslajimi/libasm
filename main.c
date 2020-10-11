@@ -3,6 +3,9 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+#include <limits.h>
+#include <stdio.h>
+
 typedef struct	s_list
 {
 	void *data;
@@ -39,13 +42,16 @@ extern int	ft_list_size(t_list *begin_list);
 extern void	ft_list_push_front(t_list **begin_list, void *data);
 extern void	ft_list_swap(t_list *t1, t_list *t2);
 extern void	ft_list_sort(t_list **begin_list, int (*cmp)());
+extern void	ft_list_remove_if(t_list **begin_list, void *data_ref, int *(cmp)(), void (*free_fct)(void *));
 
 int main()
 {
-	int number = 101;
-	int number2 = 21;
-	int number3 = 51;
-	int number4 = 40;
+	time_t t;
+	srand((unsigned) time(&t));
+	int number	= rand() % SHRT_MAX;
+	int number2	= rand() % SHRT_MAX;
+	int number3	= rand() % SHRT_MAX;
+	int number4	= rand() % SHRT_MAX;
 	
 	t_list *t1, *t2;
 	t1 = (t_list*)malloc(sizeof(t_list));
@@ -66,7 +72,6 @@ int main()
 /*Test Swap*/
 	printf("swap:%8s", " ");
 	ft_list_swap(t1, t1->next);
-	ft_list_swap(t1->next->next, t1);
 	strctPrint(t1);	
 	fflush(stdout);
 	
@@ -75,6 +80,8 @@ int main()
 	printf("sort:%8s", " ");
 	strctPrint(t1);	
 	fflush(stdout);
+
+/*ft_list_remove_if*/
 
 	free(t1);
 	free(t2);
