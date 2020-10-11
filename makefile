@@ -10,8 +10,11 @@ all:
 	nasm  -f macho64 ft_list_push_front.s
 	nasm  -f macho64 ft_list_swap.s
 	nasm  -f macho64 ft_list_sort.s
+	nasm -f macho64 ft_list_remove_if.s
+
 	ar -rcs libasm.a *.o
 	gcc -g main.c *.o -o debug
+
 fclean:
 	rm -rf *.o
 	rm *.a

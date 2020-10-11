@@ -20,16 +20,30 @@ int numCmp(void *data, void *data2)
 	return (ret);
 }
 
+int numRef(void *data, void *dataRef)
+{
+	int ret = 1;
+	*((int*)data) < *((int*)dataRef) ? ret = 0 : (void)ret;
+	return (ret);
+}
+
+void numFree(void *data)
+{
+	*((int*)data) = 0;
+}
+
 void strctPrint(t_list *list)
 {
 	while(list)
 	{
 		fflush(stdout);
-		printf("[___%d___]", *((int*)list->data));
+		printf("[___%d___]", *((int*)list->data));//to be deleted
 		list = list->next;
 	}
 	printf("\n");
 }
+
+
 
 extern int	ft_strlen (char *str);
 extern char	*ft_strcpy(char *dst, const char *src); 
@@ -42,20 +56,20 @@ extern int	ft_list_size(t_list *begin_list);
 extern void	ft_list_push_front(t_list **begin_list, void *data);
 extern void	ft_list_swap(t_list *t1, t_list *t2);
 extern void	ft_list_sort(t_list **begin_list, int (*cmp)());
-extern void	ft_list_remove_if(t_list **begin_list, void *data_ref, int *(cmp)(), void (*free_fct)(void *));
+extern void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 
 int main()
 {
 	time_t t;
 	srand((unsigned) time(&t));
-	int number	= rand() % SHRT_MAX;
-	int number2	= rand() % SHRT_MAX;
-	int number3	= rand() % SHRT_MAX;
-	int number4	= rand() % SHRT_MAX;
+	int number	= (rand() % 100);
+	int number2	= (rand() % 100) * -1;
+	int number3	= (rand() % 100) * -1;
+	int number4	= (rand() % 100);
+	int ref		= (rand() % 100);
 	
-	t_list *t1, *t2;
+	t_list *t1; 
 	t1 = (t_list*)malloc(sizeof(t_list));
-	t2 = (t_list*)malloc(sizeof(t_list));
 
 
 	t1->data = &number;
@@ -64,26 +78,31 @@ int main()
 	ft_list_push_front(&t1, &number3);
 	ft_list_push_front(&t1, &number4);
 
-/*Testing Push_Front*/
-	printf("push:%8s", " ");
+/*bonus*/
+
+/**Testing Push_Front*/
+	printf("push:%20s", " ");
 	strctPrint(t1);	
 	fflush(stdout);
 
-/*Test Swap*/
-	printf("swap:%8s", " ");
+/**Test Swap*/
+	printf("swap:%20s", " ");
 	ft_list_swap(t1, t1->next);
 	strctPrint(t1);	
 	fflush(stdout);
 	
-/*ft_list_sort*/
+/**ft_list_sort*/
 	ft_list_sort(&t1, numCmp);
-	printf("sort:%8s", " ");
+	printf("sort:%20s", " ");
 	strctPrint(t1);	
 	fflush(stdout);
 
-/*ft_list_remove_if*/
+/**ft_list_remove_if*/
+	ft_list_remove_if(&t1, &ref, numRef, numFree);
+	printf("remove [~<%d]:%11s",ref, " ");
+	strctPrint(t1);
+	fflush(stdout);
 
 	free(t1);
-	free(t2);
 	return (0);
 }
