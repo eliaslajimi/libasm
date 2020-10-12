@@ -1,4 +1,5 @@
 all: 
+	nasm  -f macho64 ft_isspace.s
 	nasm  -f macho64 ft_strdup.s
 	nasm  -f macho64 ft_strcpy.s
 	nasm  -f macho64 ft_strlen.s
@@ -11,6 +12,7 @@ all:
 	nasm  -f macho64 ft_list_swap.s
 	nasm  -f macho64 ft_list_sort.s
 	nasm -f macho64 ft_list_remove_if.s
+	nasm -f macho64 ft_atoi_base.s
 
 	ar -rcs libasm.a *.o
 	gcc -g main.c *.o -o debug
