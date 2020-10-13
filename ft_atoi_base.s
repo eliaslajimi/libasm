@@ -86,7 +86,6 @@ _iter_2B:
 	jmp _iter_1
 
 is_false:
-pop r13
 	mov rdi, [r12 + rbx]	;compare *str to '-'
 	mov rsi, 45
 	call _ft_cmp
