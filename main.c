@@ -203,7 +203,7 @@ int main()
 
 /**ft_atoi_base*/
 	char c = 'i';
-	char *str = "123";
+	char *str = "1123";
 	char *base = "       0123456789";
 	printf("str: [%s]\nbase: [%s]\n", str, base);
 	printf("atoi_based: __[%d]__", ft_atoi_based(str, base));

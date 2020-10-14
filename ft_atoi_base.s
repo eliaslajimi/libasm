@@ -10,7 +10,7 @@ _ft_atoi_base:
 	push r14
 	push r15
 	
-	mov rbx, 0
+	mov rbx, -1
 	mov rax, 0
 	mov r12, rdi		;str
 	mov r13, rsi		;base
@@ -61,27 +61,27 @@ _iter_2:
 	mov rdi, [r12 + rbx]	;compare *str to *base
 	mov rsi, [r13 + r11]
 	call _ft_cmp
-	cmp rax, 1
-	je is_false
-
-_iter_2B:
-	mov rdi, [r12 + rbx]	;compare *str to *base
-	mov rsi, [r13 + r11]
-	call _ft_cmp
-	cmp rax, 1
-	je _error
+	cmp rax, 0
+	je _iter_2
 
 	mov rdi, [r12 + rbx]	;compare *str to '-'
 	mov rsi, 45
 	call _ft_cmp
 	cmp rax, 1
-	je _error
+	je _iter_2
 
-	mov rdi, [r12 + rbx]	;compare *str to '+'
+	mov rdi, [r12 + rbx]	;compare *str to '-'
 	mov rsi, 43
 	call _ft_cmp
 	cmp rax, 1
-	je _error
+	je _iter_2
+
+_iter_2B:
+	mov rdi, [r12 + rbx]	;compare *str to *base
+	mov rsi, [r13 + r11]
+	call _ft_cmp
+	cmp rax, 0
+	je is_false
 
 	jmp _iter_1
 
@@ -90,15 +90,15 @@ is_false:
 	mov rsi, 45
 	call _ft_cmp
 	cmp rax, 1
-	je _iter_2
+	je _iter_1
 
 	mov rdi, [r12 + rbx]	;compare *str to '+'
 	mov rsi, 43
 	call _ft_cmp
 	cmp rax, 1
-	je _iter_2
+	je _iter_1
 
-	jmp _iter_2B
+	jmp _error
 
 _error:
 	mov rax, -1
