@@ -97,6 +97,12 @@ int	ft_atoi_based(char *str, char *base)
 	return (res * negative);
 }
 //===================
+int write_number(int d)
+{
+	printf("\nnumber is: __%d__\n", d);
+	return (d);
+}
+
 typedef struct	s_list
 {
 	void *data;
@@ -140,6 +146,8 @@ void strctPrint(t_list *list)
 extern int	ft_isspace(char c);
 extern void	ft_list_swap(t_list *t1, t_list *t2);
 extern int	ft_cmp(char a, char b);
+extern int	ft_strchr(char *str, char c);
+extern int	multi(int a, int b);
 /*main*/
 extern char	*ft_strjoin(const char *s1, const char *s2);
 extern int	ft_strlen (char *str);
@@ -203,11 +211,12 @@ int main()
 
 /**ft_atoi_base*/
 	char c = 'i';
-	char *str = "1123";
+	char *str = "35";
 	char *base = "0123456789";
+	printf("multi: %d\n", multi(1100, 5));
 	printf("str: [%s]\nbase: [%s]\n", str, base);
-	printf("atoi_based: __[%d]__", ft_atoi_based(str, base));
-	printf("atoi_base: __%c__[%d]__", ft_atoi_base(str, base),ft_atoi_base(str, base));
+	printf("atoi_based: __[%d]__\n", ft_atoi_based(str, base));
+	printf("atoi_base: __[%d]__", ft_atoi_base(str, base));
 	
 	free(t1);
 	return (0);

@@ -1,4 +1,6 @@
 extern _ft_cmp
+extern _multi
+extern _ft_strchr
 extern _ft_strlen
 extern _ft_isspace
 global _ft_atoi_base
@@ -23,6 +25,87 @@ _checkLength:
 	cmp rbx, 0
 	je _error
 
+	mov rbx, -1
+
+_checkWhiteSpace2:
+	add rbx, 1
+
+	mov rdi, [r12 + rbx]	;compare *str to 0
+	mov rsi, 0
+	call _ft_cmp
+	cmp rax, 1
+	je _processRes		;end of the loop
+
+	mov rdi, [r12 + rbx]	;compare *str to whitespace
+	call _ft_isspace
+	cmp rax, 1
+	je _checkWhiteSpace2
+
+_processRes:
+	mov r11, rbx
+	sub r11, 1
+
+	mov r14, 0		;result
+	mov r10, 1		;sign
+
+_prIter1:
+	inc r11
+
+	mov rdi, [r12 + r11]	;compare *str to 0
+	mov rsi, 0
+	call _ft_cmp
+	cmp rax, 1
+	je _ret			;end of the loop
+
+	mov rdi, [r12 + r11]	;compare *str to -
+	mov rsi, 45
+	call _ft_cmp
+	cmp rax, 1
+	je _prIter1C
+
+	mov rdi, [r12 + r11]	;compare *str to +
+	mov rsi, 43
+	call _ft_cmp
+	cmp rax, 1
+	je _prIter1C
+
+_prIter1B:
+	mov rdi, [r12 + r11]	;compare *str to -
+	mov rsi, 45
+	call _ft_cmp
+	cmp rax, 1
+	je _isNeg
+
+	mov rdi, [r12 + r11]	;compare *str to +
+	mov rsi, 43
+	call _ft_cmp
+	cmp rax, 1
+	je _prIter1
+
+	mov rax, r14
+	mul r15
+	mov r14, rax
+
+	mov rdi, r13
+	mov rsi, [r12 + r11]
+	call _ft_strchr
+	add r14, rax
+
+	jmp _prIter1
+
+_prIter1C:
+	cmp r11, rbx
+	je _prIter1B
+
+	jmp _ret
+
+_isNeg:
+	mov r10, -1
+	jmp _prIter1
+	
+_ret:
+	mov rax, r14		;return
+
 _return:
 	pop r15
 	pop r14
@@ -34,7 +117,7 @@ _return:
 _checkBaseLength:
 	mov rbx, -1
 	mov r11, 0
-;;==============================;Refactoring into extern util func
+
 _blIter1:
 	inc rbx
 
@@ -73,14 +156,13 @@ _blIter2_2:
 	cmp rax, 1
 	je _error		;end of the loop
 	jmp _blIter2
-;;==============================
+
 _blRet:
 	cmp rbx, 2
 	jl _error
 	mov r15, rbx
 
 _checkError:
-
 _check_whitespace:
 	add rbx, 1		;cmp *str to whitespace
 	mov rdi, [r12 + rbx]

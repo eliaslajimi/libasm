@@ -1,5 +1,7 @@
 all: 
 	nasm -f macho64 ft_cmp.s
+	nasm -f macho64 multi.s
+	nasm -f macho64 ft_strchr.s
 	nasm  -f macho64 ft_isspace.s
 	nasm  -f macho64 ft_strdup.s
 	nasm  -f macho64 ft_strcpy.s
