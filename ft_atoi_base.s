@@ -16,10 +16,12 @@ _ft_atoi_base:
 	mov r13, rsi		;base
 
 _check:
-	jmp _check_error
+	jmp _checkBaseLength
+	jmp _checkError
 
 _checkLength:
-	mov rax, [r12 + rbx]	
+	cmp rbx, 0
+	je _error
 
 _return:
 	pop r15
@@ -29,7 +31,55 @@ _return:
 	pop rbx
 	ret
 
-_check_error:
+_checkBaseLength:
+	mov rbx, -1
+	mov r11, 0
+;;==============================;Refactoring into extern util func
+_blIter1:
+	inc rbx
+
+	mov rdi, [r13 + rbx]	;compare *base to 0
+	mov rsi, 0
+	call _ft_cmp
+	cmp rax, 1
+	je _blRet
+
+	mov rdi, [r13 + rbx]	;compare *base to -
+	mov rsi, 45
+	call _ft_cmp
+	cmp rax, 1
+	je _error
+
+	mov rdi, [r13 + rbx]	;compare *base to +
+	mov rsi, 43
+	call _ft_cmp
+	cmp rax, 1
+	je _error
+
+	mov r11, rbx
+
+_blIter2:
+	inc r11
+	mov rdi, [r13 + r11]	;compare *base to 0
+	mov rsi, 0
+	call _ft_cmp
+	cmp rax, 1
+	je _blIter1		;end of the loop
+
+_blIter2_2:
+	mov rdi, [r13 + r11]	;compare *base[r11] to *base[rbx]
+	mov rsi, [r13 + rbx]
+	call _ft_cmp
+	cmp rax, 1
+	je _error		;end of the loop
+	jmp _blIter2
+;;==============================
+_blRet:
+	cmp rbx, 2
+	jl _error
+	mov r15, rbx
+
+_checkError:
 
 _check_whitespace:
 	add rbx, 1		;cmp *str to whitespace

@@ -204,7 +204,7 @@ int main()
 /**ft_atoi_base*/
 	char c = 'i';
 	char *str = "1123";
-	char *base = "       0123456789";
+	char *base = "0123456789";
 	printf("str: [%s]\nbase: [%s]\n", str, base);
 	printf("atoi_based: __[%d]__", ft_atoi_based(str, base));
 	printf("atoi_base: __%c__[%d]__", ft_atoi_base(str, base),ft_atoi_base(str, base));
