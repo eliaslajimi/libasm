@@ -11,7 +11,7 @@ _ft_atoi_base:
 	push r13
 	push r14
 	push r15
-	
+
 	mov rbx, -1
 	mov rax, 0
 	mov r12, rdi		;str
@@ -42,59 +42,71 @@ _checkWhiteSpace2:
 	je _checkWhiteSpace2
 
 _processRes:
-	mov r11, rbx
-	sub r11, 1
+	mov r15, rbx
+	sub r15, 1
 
 	mov r14, 0		;result
 	mov r10, 1		;sign
 
 _prIter1:
-	inc r11
+	inc r15
 
-	mov rdi, [r12 + r11]	;compare *str to 0
+	mov rdi, [r12 + r15]	;compare *str to 0
 	mov rsi, 0
 	call _ft_cmp
 	cmp rax, 1
 	je _ret			;end of the loop
 
-	mov rdi, [r12 + r11]	;compare *str to -
+	mov rdi, [r12 + r15]	;compare *str to -
 	mov rsi, 45
 	call _ft_cmp
 	cmp rax, 1
 	je _prIter1C
 
-	mov rdi, [r12 + r11]	;compare *str to +
+	mov rdi, [r12 + r15]	;compare *str to +
 	mov rsi, 43
 	call _ft_cmp
 	cmp rax, 1
 	je _prIter1C
 
 _prIter1B:
-	mov rdi, [r12 + r11]	;compare *str to -
+	mov rdi, [r12 + r15]	;compare *str to -
 	mov rsi, 45
 	call _ft_cmp
 	cmp rax, 1
 	je _isNeg
 
-	mov rdi, [r12 + r11]	;compare *str to +
+	mov rdi, [r12 + r15]	;compare *str to +
 	mov rsi, 43
 	call _ft_cmp
 	cmp rax, 1
 	je _prIter1
 
-	mov rax, r14
-	mul r15
-	mov r14, rax
+;;; mov rax, r11
+    xor rcx, rcx
+    xor rdx, rdx
 
-	mov rdi, r13
-	mov rsi, [r12 + r11]
-	call _ft_strchr
-	add r14, rax
+    mov rdi, r13                ;call strlen
+    call _ft_strlen
+
+   imul r14d, eax
+    ;; mov eax, r14d
+    ;; jmp _return
+   ;; mov eax, edx
+    ;; mov r14d, eax
+    ;; mov r14, rax
+
+    mov rcx, r13
+    xor rax, rax
+    mov rdi, rcx
+    mov rsi, [r12 + r15]
+    call _ft_strchr
+    add r14d, eax
 
 	jmp _prIter1
 
 _prIter1C:
-	cmp r11, rbx
+	cmp r15, rbx
 	je _prIter1B
 
 	jmp _ret
@@ -102,7 +114,7 @@ _prIter1C:
 _isNeg:
 	mov r10, -1
 	jmp _prIter1
-	
+
 _ret:
 	mov rax, r14		;return
 
