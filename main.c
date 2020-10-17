@@ -211,13 +211,11 @@ int main()
 
 /**ft_atoi_base*/
 	char c = 'i';
-	char *str = "1 7489";
+	char *str = "1 43+076";
 	char *base = "0 123456789";
-	printf("multi: %d\n", multi(1100, 5));
-	printf("str: [%s]\nbase: [%s]\n", str, base);
 	printf("atoi_based: __[%d]__\n", ft_atoi_based(str, base));
 	printf("atoi_base: __[%d]__", ft_atoi_base(str, base));
-
+/*******/
 	free(t1);
 	return (0);
 }

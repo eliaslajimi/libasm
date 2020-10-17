@@ -14,8 +14,8 @@ _ft_atoi_base:
 
 	mov rbx, -1
 	mov rax, 0
-	mov r12, rdi		;str
-	mov r13, rsi		;base
+	mov r12, rdi              ;str
+	mov r13, rsi              ;base
 
 _check:
 	jmp _checkBaseLength
@@ -30,13 +30,13 @@ _checkLength:
 _checkWhiteSpace2:
 	add rbx, 1
 
-	mov rdi, [r12 + rbx]	;compare *str to 0
+	mov rdi, [r12 + rbx]    ;compare *str to 0
 	mov rsi, 0
 	call _ft_cmp
 	cmp rax, 1
-	je _processRes		;end of the loop
+	je _processRes          ;end of the loop
 
-	mov rdi, [r12 + rbx]	;compare *str to whitespace
+	mov rdi, [r12 + rbx]    ;compare *str to whitespace
 	call _ft_isspace
 	cmp rax, 1
 	je _checkWhiteSpace2
@@ -45,17 +45,18 @@ _processRes:
 	mov r15, rbx
 	sub r15, 1
 
-	mov r14, 0		;result
-	mov r10, 1		;sign
+	mov r14, 0              ;result
+	mov r10, 1              ;sign
 
 _prIter1:
-	inc r15
+    ;; inc r15
+    add r15, 1
 
-	mov rdi, [r12 + r15]	;compare *str to 0
+	mov rdi, [r12 + r15]    ;compare *str to 0
 	mov rsi, 0
 	call _ft_cmp
 	cmp rax, 1
-	je _ret			;end of the loop
+	je _ret                 ;end of the loop
 
 	mov rdi, [r12 + r15]	;compare *str to -
 	mov rsi, 45
@@ -82,19 +83,13 @@ _prIter1B:
 	cmp rax, 1
 	je _prIter1
 
-;;; mov rax, r11
     xor rcx, rcx
     xor rdx, rdx
 
-    mov rdi, r13                ;call strlen
+    mov rdi, r13            ;call strlen
     call _ft_strlen
 
-   imul r14d, eax
-    ;; mov eax, r14d
-    ;; jmp _return
-   ;; mov eax, edx
-    ;; mov r14d, eax
-    ;; mov r14, rax
+    imul r14d, eax
 
     mov rcx, r13
     xor rax, rax
@@ -112,11 +107,14 @@ _prIter1C:
 	jmp _ret
 
 _isNeg:
-	mov r10, -1
+	mov rbx, -1
 	jmp _prIter1
 
 _ret:
-	mov rax, r14		;return
+    mov rax, r14		;return
+    cmp rbx, -1
+    jne _return
+    neg rax
 
 _return:
 	pop r15
@@ -131,7 +129,8 @@ _checkBaseLength:
 	mov r11, 0
 
 _blIter1:
-	inc rbx
+    ;; inc rbx
+    add rbx, 1
 
 	mov rdi, [r13 + rbx]	;compare *base to 0
 	mov rsi, 0
@@ -154,7 +153,8 @@ _blIter1:
 	mov r11, rbx
 
 _blIter2:
-	inc r11
+    ;; inc r11
+    add r11, 1
 	mov rdi, [r13 + r11]	;compare *base to 0
 	mov rsi, 0
 	call _ft_cmp
@@ -175,6 +175,7 @@ _blRet:
 	mov r15, rbx
 
 _checkError:
+    mov rbx, -1
 _check_whitespace:
 	add rbx, 1		;cmp *str to whitespace
 	mov rdi, [r12 + rbx]
@@ -186,13 +187,15 @@ _check_str:
 	sub rbx, 1
 
 _iter_1:
-	inc rbx
+    add rbx, 1
 	mov rdi, [r12 + rbx]	;compare *str to 0
 	mov rsi, 0
 	call _ft_cmp
 	cmp rax, 1
 	je _checkLength 	;here goes the end of the loop
-	mov r11, -1		;init second counter
+
+    xor r11, r11
+	sub r11, 1		;init second counter
 
 _iter_2:
 	add r11, 1
@@ -200,36 +203,8 @@ _iter_2:
 	mov rsi, 0
 	call _ft_cmp
 	cmp rax, 1
-	je _iter_2B		;if statement after the loop
+    je _error
 
-	mov rdi, [r12 + rbx]	;compare *str to *base
-	mov rsi, [r13 + r11]
-	call _ft_cmp
-	cmp rax, 0
-	je _iter_2
-
-	mov rdi, [r12 + rbx]	;compare *str to '-'
-	mov rsi, 45
-	call _ft_cmp
-	cmp rax, 1
-	je _iter_2
-
-	mov rdi, [r12 + rbx]	;compare *str to '-'
-	mov rsi, 43
-	call _ft_cmp
-	cmp rax, 1
-	je _iter_2
-
-_iter_2B:
-	mov rdi, [r12 + rbx]	;compare *str to *base
-	mov rsi, [r13 + r11]
-	call _ft_cmp
-	cmp rax, 0
-	je is_false
-
-	jmp _iter_1
-
-is_false:
 	mov rdi, [r12 + rbx]	;compare *str to '-'
 	mov rsi, 45
 	call _ft_cmp
@@ -242,8 +217,14 @@ is_false:
 	cmp rax, 1
 	je _iter_1
 
-	jmp _error
+	mov rdi, [r12 + rbx]	;compare *str to *base
+	mov rsi, [r13 + r11]
+	call _ft_cmp
+	cmp rax, 0
+	je _iter_2
+
+    jmp _iter_1
 
 _error:
-	mov rax, -1
+	mov rax, 0
 	jmp _return
