@@ -1,26 +1,42 @@
-all: 
-	nasm -f macho64 ft_cmp.s
-	nasm -f macho64 multi.s
-	nasm -f macho64 ft_strchr.s
-	nasm  -f macho64 ft_isspace.s
-	nasm  -f macho64 ft_strdup.s
-	nasm  -f macho64 ft_strcpy.s
-	nasm  -f macho64 ft_strlen.s
-	nasm  -f macho64 ft_write.s
-	nasm  -f macho64 ft_read.s
-	nasm  -f macho64 ft_strcmp.s
-	nasm  -f macho64 ft_strjoin.s
-	nasm  -f macho64 ft_list_size.s
-	nasm  -f macho64 ft_list_push_front.s
-	nasm  -f macho64 ft_list_swap.s
-	nasm  -f macho64 ft_list_sort.s
-	nasm -f macho64 ft_list_remove_if.s
-	nasm -f macho64 ft_atoi_base.s
+SRC = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s \
+		 ft_strdup.s ft_atoi_base.s ft_list_push_front.s \
+		 ft_list_size.s ft_list_sort.s ft_list_remove_if.s\
+		ft_cmp.s ft_isspace.s ft_strjoin.s ft_strchr.s ft_list_swap.s
 
-	ar -rcs libasm.a *.o
-	gcc -g main.c *.o -o debug
+OBJS = $(SRC:.s=.o)
 
-fclean:
-	rm -rf *.o
-	rm *.a
-	rm debug
+NASM = nasm
+
+NFLAG = -f macho64
+
+CC = gcc
+
+CFLAG = -Wall -Wextra -Werror
+
+NAME = libasm.a
+
+%.o: %.s
+	$(NASM) $(NFLAG) $<
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS)
+
+clean:
+	rm -rf $(OBJS)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all
+
+test: all
+	$(CC) -I./ $(CFLAG) $(NAME) main.c
+	@./a.out
+	@rm -rf a.out
+
+ctest: fclean
+	rm -rf a.out
+
+.PHONY: all test clean fclean re ctest

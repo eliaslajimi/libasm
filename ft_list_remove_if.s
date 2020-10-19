@@ -1,6 +1,18 @@
 global _ft_list_remove_if
 
 _ft_list_remove_if:
+	cmp rdi, 0
+	je _error
+	cmp rdx, 0
+	je _error
+	mov rax, [rdi]
+	cmp rax, 0
+	je _error
+	call rdx
+	cmp rax, 0
+	je _error
+
+_start:
 	push r12
 	push r13
 	push r14
@@ -41,6 +53,8 @@ _remove:
 
 	mov r14, QWORD [r14 + sizOfPtr]
 	jmp _iter
+_error:
+	ret
 
 section .data
 NULL	equ 0

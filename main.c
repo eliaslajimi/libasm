@@ -5,6 +5,7 @@
 
 #include <limits.h>
 #include <stdio.h>
+#include <time.h>
 
 //===================
 
@@ -210,7 +211,6 @@ int main()
 	fflush(stdout);
 
 /**ft_atoi_base*/
-	char c = 'i';
 	char *str = "1 43+076";
 	char *base = "0 123456789";
 	printf("atoi_based: __[%d]__\n", ft_atoi_based(str, base));
