@@ -2,9 +2,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <limits.h>
-#include <stdio.h>
 #include <time.h>
 
 //===================
@@ -185,37 +185,123 @@ int main()
 	ft_list_push_front(&t1, &number3);
 	ft_list_push_front(&t1, &number4);
 
-/*bonus*/
+/*testing*/
+/**main*/
+/** test strlen **/
+    printf("strlen:_%d_\n", (int)strlen("Ad rivum eundem lupus et agnus venerant"));
+    printf("ft_strlen:_%d_\n", ft_strlen("Ad rivum eundem lupus et agnus venerant"));
+    printf("\n");
 
+    printf("strlen:_%d_\n", (int)strlen(""));
+    printf("ft_strlen:_%d_\n", ft_strlen(""));
+    printf("\n");
+
+    //printf("strlen:_%d_\n", (int)strlen(NULL));
+    //printf("ft_strlen:_%d_\n", ft_strlen(NULL));
+
+    printf("strlen:_%d_\n", (int)strlen("Hello, World!"));
+    printf("ft_strlen:_%d_\n", ft_strlen("Hello, World!"));
+    printf("\n");
+
+/**test strcopy*/
+    //char *src = "Lupus et Agnus";
+    char *dst  = "";
+
+    //ft_strcpy(dst, src);
+    printf("ft_strcopy: [%s]\n", dst);
+
+    dst = "";
+    //strcpy(dst, src);
+    printf("fstrcopy: [%s]\n", dst);
+    printf("\n");
+
+/*strcmp*/
+    char *s1 = "Lupus et Agnus";
+    char *s2 = "lupus et agnus venerant";
+
+    printf("ft_strcmp: _%d_\n", ft_strcmp(s1, s2));
+    printf("strcmp: _%d_\n", strcmp(s1, s2));
+    printf("\n");
+
+/*write*/
+    printf("write: _%d_\n",(int)write(1, "Hello World", (int)strlen("Hello World")));
+    printf("ft_write: _%d_\n",(int)ft_write(1, "Hello World", (int)strlen("Hello World")));
+    printf("\n");
+
+    printf("write: _%d_\n",(int)write(1, "", (int)strlen("hello world")));
+    printf("ft_write: _%d_\n",(int)ft_write(1, "", (int)strlen("hello world")));
+    printf("\n");
+
+    printf("write: _%d_\n",(int)write(1, NULL, 1));
+    printf("ft_write: _%d_\n",(int)ft_write(1, NULL, 1));
+    printf("\n");
+
+/*dup*/
+    s1 = "Graculus Superbus et Pavo";
+    char *dest = NULL;
+
+    dest = ft_strdup(s1);
+    printf("ft_strdup: [%s]\n", dest);
+
+    dest = ft_strdup(s1);
+    printf("strdup: [%s]\n", dest);
+    printf("\n");
+/*read*/
+    printf("ft_read");
+    fflush(stdout);
+    printf("\n");
+    fflush(stdout);
+
+    char buf[14];
+    int ret = 0;
+
+    while ((ret = ft_read(1, buf, 1)) > 0)
+    {
+ 	printf("%s", buf);
+     	fflush(stdout);
+    }
+    fflush(stdout);
+    printf("read:");
+    printf("\n");
+    fflush(stdout);
+    while ((ret = read(1, buf, 1)) > 0)
+    {
+ 	printf("%s", buf);
+     	fflush(stdout);
+    }
+    printf("\n");
+
+/**bonus*/
 /**Testing Push_Front*/
-	printf("push:%20s", " ");
-	strctPrint(t1);
-	fflush(stdout);
+           printf("push:%20s", " ");
+           strctPrint(t1);
+           fflush(stdout);
 
 /**Test Swap*/
-	printf("swap:%20s", " ");
-	ft_list_swap(t1, t1->next);
-	strctPrint(t1);
-	fflush(stdout);
+           printf("swap:%20s", " ");
+           ft_list_swap(t1, t1->next);
+           strctPrint(t1);
+           fflush(stdout);
 
 /**ft_list_sort*/
-	ft_list_sort(&t1, numCmp);
-	printf("sort:%20s", " ");
-	strctPrint(t1);
-	fflush(stdout);
+           ft_list_sort(&t1, numCmp);
+           printf("sort:%20s", " ");
+           strctPrint(t1);
+           fflush(stdout);
 
 /**ft_list_remove_if*/
-	ft_list_remove_if(&t1, &ref, numRef, numFree);
-	printf("remove [~<%d]:%11s",ref, " ");
-	strctPrint(t1);
-	fflush(stdout);
+           ft_list_remove_if(&t1, &ref, numRef, numFree);
+           printf("remove [~<%d]:%11s",ref, " ");
+           strctPrint(t1);
+           fflush(stdout);
 
 /**ft_atoi_base*/
-	char *str = "1 43+076";
-	char *base = "0 123456789";
-	printf("atoi_based: __[%d]__\n", ft_atoi_based(str, base));
-	printf("atoi_base: __[%d]__", ft_atoi_base(str, base));
+    	   printf("\n");
+           char *str = "1 43+076";
+           char *base = "0 123456789";
+           printf("atoi_based: __[%d]__\n", ft_atoi_based(str, base));
+           printf("atoi_base: __[%d]__", ft_atoi_base(str, base));
 /*******/
-	free(t1);
-	return (0);
-}
+           free(t1);
+           return (0);
+           }
